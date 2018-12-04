@@ -1,0 +1,29 @@
+<div class="add-forms">
+  <!-- 名前 -->
+  <div class="add-forms-input">
+      <mat-form-field>
+          <input matInput type="text" placeholder="lastname" [formControl]="lastNameControl">
+          <mat-error *ngIf="lastNameControl.hasError('required')">
+            lastname is <strong>required</strong>
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" placeholder="firstname" [formControl]="firstNameControl">
+        <mat-error *ngIf="firstNameControl.hasError('required')">
+          firstname is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <!-- 学年 -->
+      <mat-form-field>
+        <input matInput type="text" placeholder="grade" [formControl]="gradeControl">
+          <mat-error *ngIf="gradeControl.hasError('required')">
+            grade is <strong>required</strong>
+          </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="add-forms-btn">
+      <!-- 検索ボタン -->
+      <button mat-raised-button color="accent" (click)="openConfirm()">ADD</button>  
+    </div>
+</div>

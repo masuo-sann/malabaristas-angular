@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>MemberDetail</h1>
+<div mat-dialog-content>
+  <!-- 名前 -->
+  <h2>名前</h2>
+  <span>{{data.lastName}} {{data.firstName}}</span>
+  <mat-divider></mat-divider>
+  <!-- 学年 -->
+  <h2>学年</h2>
+  <span>{{data.grade}} 年</span>
+  <mat-divider></mat-divider>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="warn" (click)="onNoClick()">CLOSE</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" (click)="editMemberProfile()" cdkFocusInitial>EDIT</button>
+</div>

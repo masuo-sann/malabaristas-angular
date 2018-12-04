@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>MemberAddRequest</h1>
+<div mat-dialog-content>
+  <!-- 名前 -->
+  <h2>名前</h2>
+  <span>{{data.lastName}}</span>
+  <span>{{data.firstName}}</span>
+  <mat-divider></mat-divider>
+  <!-- 学年 -->
+  <h2>学年</h2>
+  <span>{{data.grade}}</span>
+  <mat-divider></mat-divider>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="warn" (click)="onNoClick()">CANCEL</button>
+  <button mat-button color="primary" [mat-dialog-close]="data" (click)="addMemberRequest()" cdkFocusInitial>OK</button>
+</div>

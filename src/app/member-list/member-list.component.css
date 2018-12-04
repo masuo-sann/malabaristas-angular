@@ -1,0 +1,13 @@
+mat-form-field {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+    margin: auto;
+}
+
+.rows:hover {
+    background-color: beige;
+    cursor: pointer;
+}
