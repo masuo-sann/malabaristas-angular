@@ -2,15 +2,15 @@
 <div mat-dialog-content>
   <!-- 名前 -->
   <h2>名前</h2>
-  <span>{{data.lastName}}</span>
-  <span>{{data.firstName}}</span>
+  <span>{{member.lastName}}</span>
+  <span>{{member.firstName}}</span>
   <mat-divider></mat-divider>
   <!-- 学年 -->
   <h2>学年</h2>
-  <span>{{data.grade}}</span>
+  <span>{{member.grade}}</span>
   <mat-divider></mat-divider>
 </div>
 <div mat-dialog-actions>
   <button mat-button color="warn" (click)="onNoClick()">CANCEL</button>
-  <button mat-button color="primary" [mat-dialog-close]="data" (click)="addMemberRequest()" cdkFocusInitial>OK</button>
+  <button mat-button color="primary" [mat-dialog-close]="member" (click)="addMemberRequest()" cdkFocusInitial>OK</button>
 </div>
