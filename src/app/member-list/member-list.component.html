@@ -20,5 +20,8 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
   <tr class="rows" mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openDetail(row)"></tr>
 </table>
+<div class="spinner-container" *ngIf="isLoading">
+  <mat-spinner [diameter]="60"></mat-spinner>
+</div>
   
   

@@ -25,12 +25,7 @@ export class MemberConfirmComponent implements OnInit {
   addMemberRequest(): string {
     console.log("member add request!!");
 
-    this.httpService.addMember(
-      {
-        method: 'add-member',
-        data: this.member, 
-      }
-    )
+    this.httpService.addMember(this.member)
     return "success!";
   }
 }

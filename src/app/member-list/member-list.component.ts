@@ -1,19 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import { MatDialog } from '@angular/material';
 
 import { MemberDetailComponent } from '../member-detail/member-detail.component';
 import { Member } from '../interface/member';
-
-const ELEMENT_DATA: Member[] = [
-  {lastName: 'Ishino', firstName: 'Akihisa', grade: 3},
-  {lastName: 'Hukaya', firstName: 'Shiho', grade: 2},
-  {lastName: 'Okazaki', firstName: 'Daiki', grade: 6},
-  {lastName: 'Yamamoto', firstName: 'Takashi', grade: 2},
-  {lastName: 'Saito', firstName: 'Masaki', grade: 4},
-  {lastName: 'Kitawaki', firstName: 'Shun', grade: 4},
-  {lastName: 'Sina', firstName: 'Shunpei', grade: 4},
-];
+import { HttpService } from "../service/http.service";
 
 @Component({
   selector: 'app-member-list',
@@ -21,14 +12,26 @@ const ELEMENT_DATA: Member[] = [
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
+  isLoading: boolean = true;
+  displayedColumns: string[] = ['name', 'grade'];
+  dataSource: MatTableDataSource<Member>;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public httpService: HttpService) { }
 
   ngOnInit() {
+    console.log("[DEBUG] init member-list");
+    this.httpService.listMember()
+    .subscribe(
+      (memberList: Member[]) => this.finishLoad(memberList),
+      error => console.error(error)
+    );
   }
 
-  displayedColumns: string[] = ['name', 'grade'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  finishLoad(memberList: Member[]): void{
+    this.isLoading = false;
+    this.dataSource = new MatTableDataSource(memberList);
+    console.log("[INFO] finish load! memberList = " + memberList);
+  }
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -43,9 +46,7 @@ export class MemberListComponent implements OnInit {
         grade: member.grade,
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
 }
