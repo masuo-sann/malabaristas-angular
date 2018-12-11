@@ -4,25 +4,25 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { MyMaterialModule } from './my-material/my-material-module';
 
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from "@angular/material/core";
+import { MyMaterialModule } from './module/my-material-module';
+import { AppRoutingModule } from './module/app-routing.module';
 
-import { AppRoutingModule } from './app-routing.module';
+// Componentはdeclarationに含める。
 import { AppComponent } from './app.component';
 import { MemberComponent } from './member/member.component';
-import { MemberConfirmComponent } from './member-confirm/member-confirm.component';
 import { MemberAddComponent } from './member-add/member-add.component';
-import { MemberDetailComponent } from './member-detail/member-detail.component';
 import { MemberListComponent } from './member-list/member-list.component';
 import { EventComponent } from './event/event.component';
-// import { SearchComponent } from './search/search.component';
-// import { SearchDetailComponent } from './search-detail/search-detail.component';
-// import { ResultComponent } from './result/result.component';
-// import { HistoryComponent } from './history/history.component';
-// import { HistoryDetailComponent } from './history-detail/history-detail.component';
 
-// import { ValidateService } from "./service/validate.service";
+// Dialogに表示されるComponentはentryComponentsにも含める。
+import { MemberConfirmComponent } from './member-confirm/member-confirm.component';
+import { MemberDetailComponent } from './member-detail/member-detail.component';
+
+// providersに含める。
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { MalabaristasInterceptor } from "./interceptor/malabaristas"
 
 @NgModule({
   declarations: [
@@ -33,12 +33,6 @@ import { EventComponent } from './event/event.component';
     MemberDetailComponent,
     MemberListComponent,
     EventComponent,
-    // SearchComponent,
-    // SearchDetailComponent,
-    // ResultComponent,
-    // HistoryComponent,
-    // HistoryDetailComponent,
-    // SearchConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -50,8 +44,8 @@ import { EventComponent } from './event/event.component';
     ReactiveFormsModule 
   ],
   providers: [
-    // ValidateService,
-    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher}
+    {provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher},
+    {provide: HTTP_INTERCEPTORS, useClass: MalabaristasInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],
   entryComponents: [MemberConfirmComponent, MemberDetailComponent],  // modalで開かれる奴はここに入れる

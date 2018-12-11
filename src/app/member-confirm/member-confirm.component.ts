@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Member } from '../interface/member';
-import { HttpService } from "../service/http.service";
+import { MemberService } from '../service/server/member.service';
 
 @Component({
   selector: 'app-member-confirm',
@@ -12,7 +12,7 @@ export class MemberConfirmComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<MemberConfirmComponent>,
     @Inject(MAT_DIALOG_DATA) public member: Member,
-    public httpService: HttpService,
+    public memberService: MemberService,
     ) { }
 
   ngOnInit() {
@@ -22,15 +22,10 @@ export class MemberConfirmComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  addMemberRequest(): string {
-    console.log("member add request!!");
-
-    this.httpService.addMember(
-      {
-        method: 'add-member',
-        data: this.member, 
-      }
+  addMember(member: Member): void {
+    this.memberService.addMember(this.member).subscribe(
+      resp => console.log(resp.result),
+      error => console.error(error)
     )
-    return "success!";
   }
 }

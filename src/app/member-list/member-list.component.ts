@@ -1,19 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import { MatDialog } from '@angular/material';
-
+import { MemberService } from "../service/server/member.service";
 import { MemberDetailComponent } from '../member-detail/member-detail.component';
 import { Member } from '../interface/member';
 
-const ELEMENT_DATA: Member[] = [
-  {lastName: 'Ishino', firstName: 'Akihisa', grade: 3},
-  {lastName: 'Hukaya', firstName: 'Shiho', grade: 2},
-  {lastName: 'Okazaki', firstName: 'Daiki', grade: 6},
-  {lastName: 'Yamamoto', firstName: 'Takashi', grade: 2},
-  {lastName: 'Saito', firstName: 'Masaki', grade: 4},
-  {lastName: 'Kitawaki', firstName: 'Shun', grade: 4},
-  {lastName: 'Sina', firstName: 'Shunpei', grade: 4},
-];
 
 @Component({
   selector: 'app-member-list',
@@ -21,14 +12,22 @@ const ELEMENT_DATA: Member[] = [
   styleUrls: ['./member-list.component.css']
 })
 export class MemberListComponent implements OnInit {
+  ELEMENT_DATA: Member[] 
+  displayedColumns: string[] = ['name', 'grade'];
+  dataSource;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public memberService: MemberService) { }
 
   ngOnInit() {
+    this.memberService.listMember().subscribe(
+      resp => {
+        this.ELEMENT_DATA = resp.body;
+        console.log(resp.body);
+        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      },
+      error => console.log(error)
+    )
   }
-
-  displayedColumns: string[] = ['name', 'grade'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -46,6 +45,10 @@ export class MemberListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  listMember(members: Member[]): void {
+    console.log(members);
   }
 
 }
